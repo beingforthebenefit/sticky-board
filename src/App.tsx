@@ -8,13 +8,25 @@ function App() {
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
+        <div className="form-group">
+          <label htmlFor="themeSwitch" style={{ marginBottom: 0 }}>
+            <input
+              type="checkbox"
+              id="themeSwitch"
+              role="switch"
+              onChange={(e) => {
+                const html = document.documentElement;
+                if (e.target.checked) {
+                  html.setAttribute('data-theme', 'dark');
+                } else {
+                  html.removeAttribute('data-theme');
+                }
+              }}
+            />
+            Dark Mode
+          </label>
+        </div>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
