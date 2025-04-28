@@ -21,7 +21,7 @@ const DARK_MODE_STORAGE_KEY = 'sticky-board-dark-mode';
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedDarkMode = localStorage.getItem(DARK_MODE_STORAGE_KEY);
-    return savedDarkMode ? JSON.parse(savedDarkMode) : false;
+    return savedDarkMode ? JSON.parse(savedDarkMode) : true;
   })
   
   const [notes, setNotes] = useState<Note[]>(() => {
@@ -86,8 +86,7 @@ function App() {
           <li>
             <button 
               className="contrast outline toggle-dark-mode" 
-              onClick={handleDarkModeToggle} 
-              data-tooltip={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+              onClick={handleDarkModeToggle}
             >
               {isDarkMode ? 
                 <i className="bi bi-sun-fill" aria-label="Switch to light mode"></i> : 
