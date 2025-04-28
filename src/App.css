@@ -1,9 +1,259 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.container-fluid {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+main.container-fluid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+nav.container-fluid {
+  padding: 0.5rem 1rem;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--card-border-color);
+}
+
+section.sticky-board-container {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.sticky-board {
+  position: relative;
+  height: 100%;
+  flex: 1;
+  background: var(--background-color);
+  overflow: hidden;
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: 1800px;
+}
+
+.sticky-note {
+  width: 220px;
+  padding: 0.5rem;
+  background-color: var(--sticky-note-color);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  border-radius: 2px;
+  user-select: none;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.sticky-note:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.sticky-note textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border: none;
+  border-radius: 2px;
+  resize: none;
+  background: transparent;
+  font-family: var(--font-family);
+  line-height: 1.5;
+  box-sizing: border-box;
+  color: var(--sticky-note-text);
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  min-width: auto;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+.close-btn:hover {
+  opacity: 1;
+  color: var(--del-color);
+}
+
+.add-note-btn {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.add-note-btn:hover {
+  transform: scale(1.1);
+}
+
+.toggle-dark-mode {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: auto;
+}
+
+.toggle-dark-mode i {
+  font-size: 1.25rem;
+}
+
+/* Fix tooltip positioning for centered elements */
+[data-tooltip]:not(.toggle-dark-mode):not(.add-note-btn)::before,
+[data-tooltip]:not(.toggle-dark-mode):not(.add-note-btn)::after {
+  left: 50%;
+  bottom: auto;
+  transform: translate(-50%, -0.5rem);
+}
+
+/* Right-aligned tooltip */
+.toggle-dark-mode[data-tooltip]::before,
+.toggle-dark-mode[data-tooltip]::after {
+  right: 0;
+  left: auto;
+  bottom: auto;
+  transform: translate(0, -0.5rem);
+}
+
+.toggle-dark-mode[data-tooltip]::before {
+  --tooltip-pointer-height: 0.3rem;
+  --tooltip-pointer-size: 0.65rem;
+  width: max-content;
+  max-width: 20ch;
+  text-align: right;
+}
+
+/* Left-aligned tooltip */
+.add-note-btn[data-tooltip]::before,
+.add-note-btn[data-tooltip]::after {
+  left: 200%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -0.5rem);
+}
+
+.add-note-btn[data-tooltip]::before {
+  --tooltip-pointer-height: 0.3rem;
+  --tooltip-pointer-size: 0.65rem;
+  width: max-content;
+  max-width: 20ch;
   text-align: center;
 }
+
+/* Footer styles */
+.app-footer {
+  border-top: 1px solid var(--card-border-color);
+  padding: 0.5rem 0;
+  text-align: center;
+  color: var(--color);
+  background-color: var(--background-color);
+  font-size: 0.85rem;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.app-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode styles */
+:root {
+  --sticky-note-color: #fff59d;
+  --sticky-note-text: #333;
+  /* Light mode default variables */
+  --background-color: #fff;
+  --color: #11191f;
+  --card-background-color: #f6f8f9;
+  --card-border-color: #d0d0d0;
+  --primary: #1095c1;
+}
+
+[data-theme="dark"] {
+  --sticky-note-color: #fff59d;
+  --sticky-note-text: #333;
+  --background-color: #11191f;
+  --color: #f8f9fa;
+  --card-background-color: #1e2b37;
+  --card-border-color: #374956;
+  --card-box-shadow: none;
+  --primary: #1095c1;
+}
+
+[data-theme="dark"] .sticky-board {
+  background: var(--background-color);
+}
+
+.sticky-note {
+  background-color: var(--sticky-note-color);
+  color: var(--sticky-note-text);
+}
+
+.sticky-note textarea {
+  color: var(--sticky-note-text);
+}
+
+/* Remove unused styles from the template */
 
 .logo {
   height: 6em;

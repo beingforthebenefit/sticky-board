@@ -1,46 +1,135 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import { StickyNote } from './components/StickyNote'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+interface Note {
+  id: number;
+  content: string;
+  position: Position;
+}
+
+// Local storage keys
+const NOTES_STORAGE_KEY = 'sticky-board-notes';
+const DARK_MODE_STORAGE_KEY = 'sticky-board-dark-mode';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedDarkMode = localStorage.getItem(DARK_MODE_STORAGE_KEY);
+    return savedDarkMode ? JSON.parse(savedDarkMode) : false;
+  })
+  
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const savedNotes = localStorage.getItem(NOTES_STORAGE_KEY);
+    return savedNotes ? JSON.parse(savedNotes) : [{ id: 1, content: '', position: { x: 50, y: 50 } }];
+  })
+
+  // Save notes to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notes));
+  }, [notes]);
+
+  // Save dark mode preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(DARK_MODE_STORAGE_KEY, JSON.stringify(isDarkMode));
+    const html = document.documentElement;
+    if (isDarkMode) {
+      html.setAttribute('data-theme', 'dark');
+    } else {
+      html.removeAttribute('data-theme');
+    }
+  }, [isDarkMode]);
+
+  const handleDarkModeToggle = () => {
+    setIsDarkMode(!isDarkMode);
+  }
+
+  const addNewNote = () => {
+    const id = Date.now()
+    // Position the new note with slight offset from the center
+    const offset = notes.length * 20
+    setNotes([...notes, { 
+      id, 
+      content: '',
+      position: { x: 100 + offset, y: 100 + offset }
+    }])
+  }
+
+  const updateNotePosition = (id: number, position: Position) => {
+    setNotes(notes.map(note => 
+      note.id === id ? { ...note, position } : note
+    ))
+  }
+
+  const updateNoteContent = (id: number, content: string) => {
+    setNotes(notes.map(note => 
+      note.id === id ? { ...note, content } : note
+    ))
+  }
+
+  const deleteNote = (id: number) => {
+    setNotes(notes.filter(note => note.id !== id));
+  }
 
   return (
-    <>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
-        <div className="form-group">
-          <label htmlFor="themeSwitch" style={{ marginBottom: 0 }}>
-            <input
-              type="checkbox"
-              id="themeSwitch"
-              role="switch"
-              onChange={(e) => {
-                const html = document.documentElement;
-                if (e.target.checked) {
-                  html.setAttribute('data-theme', 'dark');
-                } else {
-                  html.removeAttribute('data-theme');
-                }
-              }}
+    <main className="container-fluid">
+      <nav className="container-fluid">
+        <ul>
+          <li><strong>Sticky Board</strong></li>
+        </ul>
+        <ul>
+          <li>
+            <button 
+              className="contrast outline toggle-dark-mode" 
+              onClick={handleDarkModeToggle} 
+              data-tooltip={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? 
+                <i className="bi bi-sun-fill" aria-label="Switch to light mode"></i> : 
+                <i className="bi bi-moon-fill" aria-label="Switch to dark mode"></i>
+              }
+            </button>
+          </li>
+        </ul>
+      </nav>
+      
+      <section className="sticky-board-container">
+        <div className="sticky-board">
+          {notes.map(note => (
+            <StickyNote 
+              key={note.id}
+              id={note.id}
+              content={note.content}
+              position={note.position}
+              onPositionChange={(position: Position) => updateNotePosition(note.id, position)}
+              onContentChange={(content: string) => updateNoteContent(note.id, content)}
+              onDelete={deleteNote}
             />
-            Dark Mode
-          </label>
+          ))}
+          
+          <button 
+            className="add-note-btn secondary"
+            onClick={addNewNote}
+            aria-label="Add new note"
+            data-tooltip="New note"
+          >
+            <i className="bi bi-plus-lg"></i>
+          </button>
         </div>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      </section>
+      
+      <footer className="app-footer">
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Created by <a href="https://github.com/geraldtodd" target="_blank" rel="noopener noreferrer">Gerald Todd</a> | 
+          <a href="https://gtodd.dev" target="_blank" rel="noopener noreferrer">gtodd.dev</a>
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      </footer>
+    </main>
   )
 }
 
