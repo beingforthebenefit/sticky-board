@@ -27,5 +27,12 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1"
-  }
+  },
+  "homepage": "https://beingforthebenefit.github.io/sticky-board/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beingforthebenefit/sticky-board.git"
+  },
+  "author": "Gerald Todd <gerald@gtodd.dev>",
+  "license": "MIT"
 }
