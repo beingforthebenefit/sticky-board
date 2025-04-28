@@ -189,22 +189,6 @@ section.sticky-board-container {
   text-align: right;
 }
 
-/* Left-aligned tooltip */
-.add-note-btn[data-tooltip]::before,
-.add-note-btn[data-tooltip]::after {
-  left: 200%;
-  right: auto;
-  bottom: auto;
-  transform: translate(-50%, -0.5rem);
-}
-
-.add-note-btn[data-tooltip]::before {
-  --tooltip-pointer-height: 0.3rem;
-  --tooltip-pointer-size: 0.65rem;
-  width: max-content;
-  max-width: 20ch;
-  text-align: center;
-}
 
 /* Footer styles */
 .app-footer {
@@ -322,8 +306,9 @@ section.sticky-board-container {
   }
 
   .add-note-btn {
-    left: auto;
-    right: 20px;
+    top: 105px;
+    left: 20px;
+    right: auto;
   }
 }
 
