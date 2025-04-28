@@ -115,7 +115,6 @@ function App() {
             className="add-note-btn secondary"
             onClick={addNewNote}
             aria-label="Add new note"
-            data-tooltip="New note"
           >
             <i className="bi bi-plus-lg"></i>
           </button>
