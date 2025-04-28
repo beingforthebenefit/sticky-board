@@ -65,6 +65,13 @@ section.sticky-board-container {
   border-radius: 2px;
   user-select: none;
   transition: box-shadow 0.2s ease, transform 0.1s ease;
+  touch-action: none;
+}
+
+.sticky-note.editing {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05) rotate(0deg) !important;
+  z-index: 100 !important;
 }
 
 .sticky-note:hover {
@@ -85,6 +92,12 @@ section.sticky-board-container {
   line-height: 1.5;
   box-sizing: border-box;
   color: var(--sticky-note-text);
+  outline: none;
+}
+
+.sticky-note.editing textarea {
+  border: 1px dashed rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .close-btn {
@@ -289,4 +302,39 @@ section.sticky-board-container {
 
 .read-the-docs {
   color: #888;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .sticky-note {
+    width: 180px;
+  }
+  
+  .sticky-note textarea {
+    height: 120px;
+    font-size: 14px;
+  }
+  
+  .close-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 1.1rem;
+  }
+
+  .add-note-btn {
+    left: auto;
+    right: 20px;
+  }
+}
+
+/* Adjust app-footer for mobile */
+@media (max-width: 768px) {
+  .app-footer {
+    padding: 0.4rem 0;
+    font-size: 0.75rem;
+  }
+  
+  .app-footer a {
+    margin: 0 0.25rem;
+  }
 }
