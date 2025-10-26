@@ -2,7 +2,7 @@
 
 A simple, elegant, and intuitive sticky notes web application built with React and TypeScript. Create, move, and edit virtual sticky notes on a digital board.
 
-![Sticky Board Preview](https://beingforthebenefit.github.io/sticky-board/)
+[Sticky Board Demo](https://beingforthebenefit.github.io/sticky-board/)
 
 ## Features
 
